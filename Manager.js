@@ -13,7 +13,7 @@ class Manager {
   }
 
   // TODO : 캔버스 다시 그리는 함수
-  resetCanvas() {
+  redrawCanvas() {
     alert("reset Canvas");
   }
 
