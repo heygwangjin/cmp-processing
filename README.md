@@ -5,21 +5,12 @@
 
 ## Git
 
-### Rules for using git
-![upstream,origin](./git.png)
-1. 작업하기 전, UPSTREAM(heygwangjin) 원격 저장소의 변경 내역을 LOCAL(yumi, seongmin의 컴퓨터)에 반영한 후, 각자의 원격 저장소인 ORIGIN(yumi, seongmin의 Github 원격 저장소)에 반영하기 위해 아래의 명령어들을 실행한다.
-    - `git fetch upstream` -> UPSTREAM의 변경 이력을 가져온다.
-    - `git checkout main` -> LOCAL의 main 브랜치로 이동한다.
-    - `git merge upstream/main` -> upstream/main 브랜치를 LOCAL의 main 브랜치에 병합한다.
-    - `git push` -> LOCAL의 main 브랜치의 내용을 ORIGIN에 반영한다.
-2. 새로운 기능을 추가할 때마다 추가할 기능의 이름으로 새로운 브랜치를 생성하여 작업을 진행한다. ex) git branch playbutton (해당 명령어 실행 후, git checkout playbutton 명령어를 실행해야 생성한 브랜치로 이동이 된다.)
-3. 기능 구현이 완료되면, add, commit, push를 실행하여 완료 된 기능을 ORIGIN에 반영한다. ex) git push origin playbutton (push할 때, 기능 이름으로 생성 된 브랜치 이름 꼭 명시해주세요!)
-4. 자신의 ORIGIN인 Github 웹 사이트에 들어가서 Pull Request를 생성한다.
-5. Pull Request가 완료되면, 기능 구현할 때 사용하던 브랜치를 삭제한다.
-    - `git checkout main`
-    - `git branch -d playbutton` (playbutton 은 예시)
-6. 위의 1~5를 반복한다.
-7. 삭제
+### Steps for using git
+1. cmp_processing 프로젝트 폴더에서 `git branch` 명령어를 통해서 * main 이라는 출력 메시지를 확인한 후, origin/main 브랜치의 커밋을 받아오기 위해 `git pull` 명령어를 입력 한다.
+2. `git checkout -b feature/<기능이름>` 와 같이 명령어를 입력한 후, 기능 구현이 완료 되면 `git push -u origin <branchname>` 을 통해서 원격 저장소에 push를 한다. 
+3. Github 웹 페이지에 접속하여, Pull Request(PR)를 작성한다. (reviewer 에 리뷰할 사람 등록)
+4. 요청한 PR이 main 브랜치에 반영되면, `git checkout main` 명령어를 통해서 main 브랜치로 이동한 후, `git branch -d feature/<기능이름>` 명령어를 통해서 구현이 완료된 브랜치를 삭제한다.
+5. `git pull` 명령어를 통해서 origin의 내용을 로컬에 반영한다.
 
 ### Reference related to git
 - [직관적으로 이해하는 git & GitHub](https://deepinsight.tistory.com/78)
