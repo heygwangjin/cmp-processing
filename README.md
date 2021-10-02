@@ -16,6 +16,7 @@
     - `git checkout main`
     - `git branch -d playbutton` (playbutton 은 예시)
 6. 위의 1~5를 반복한다.
+7. 삭제
 
 ### Reference related to git
 - [직관적으로 이해하는 git & GitHub](https://deepinsight.tistory.com/78)
