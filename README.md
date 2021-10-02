@@ -1,5 +1,8 @@
 # CMP Processing Team06 Project
 
+## Credits
+- 202011111 Yu-mi Jun
+
 ## Git
 
 ### Rules for using git
