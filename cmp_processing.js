@@ -1,3 +1,4 @@
+/* Constants */
 const Y_AXIS = 1; // axis of gardient
 const X_AXIS = 2;
 const WIDTH_CANVAS = 1500;
@@ -11,7 +12,6 @@ let contentBtn, xPosBtn, yPosBtn, widthBtn, heightBtn;
 let font;
 /* Variables to store fancy text */
 let title, questionOne, questionTwo, questionTwo_2, questionThree;
-
 
 const manager = new Manager(WIDTH_CANVAS, HEIGHT_CANVAS);
 
