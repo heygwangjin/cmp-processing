@@ -5,16 +5,54 @@ class Manager {
     this.height = h;
   }
 
-  drawStartCanvas() {
+  displayInitScreen() {
     createCanvas(this.width, this.height);
-    playButton = createButton("PlAY!");
-    playButton.position(300, 600);
-    playButton.size(320, 70);
+    this.setValuesBtn("PLAY!", 600, 600, 320, 70);
+    playBtn = this.displayButton(
+      contentBtn,
+      xPosBtn,
+      yPosBtn,
+      widthBtn,
+      heightBtn
+    );
   }
 
-  // TODO : 캔버스 다시 그리는 함수
-  redrawCanvas() {
-    alert("reset Canvas");
+  /* FancyText */
+  generateFancyText(text, x, y, size, font) {
+    // Create FancyText after instanciating FancyText
+    const fancyText = new FancyText(text, x, y, size, font);
+    fancyText.createFancyText();
+
+    return fancyText;
+  }
+
+  displayFancyText(fancyText) {
+    fancyText.need = 1;
+  }
+
+  hideFancyText(fancyText) {
+    fancyText.need = 0;
+  }
+
+  /* Button */
+  setValuesBtn(content, x, y, w, h) {
+    contentBtn = content;
+    xPosBtn = x;
+    yPosBtn = y;
+    widthBtn = w;
+    heightBtn = h;
+  }
+
+  displayButton(text, positionX, positionY, width, height) {
+    const button = createButton(text);
+    button.position(positionX, positionY);
+    button.size(width, height);
+
+    return button;
+  }
+
+  hideButton(button) {
+    button.elt.style.display = "none";
   }
 
   // Use p5.js example
