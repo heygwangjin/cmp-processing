@@ -8,7 +8,7 @@ class Manager {
   displayInitScreen() {
     createCanvas(this.width, this.height);
     this.setValuesBtn("PLAY!", 600, 600, 320, 70);
-    playBtn = this.displayButton(
+    btnPlay = this.displayButton(
       contentBtn,
       xPosBtn,
       yPosBtn,

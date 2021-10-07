@@ -5,7 +5,7 @@ const WIDTH_CANVAS = 1500;
 const HEIGHT_CANVAS = 900;
 
 /* Buttons */
-let playBtn, answerBtn, wrongBtnOne, wrongBtnTwo, nextBtn;
+let btnPlay, btnAnswer, btnWrongOne, btnWrongTwo, btnNext;
 /* Values for creating button */
 let contentBtn, xPosBtn, yPosBtn, widthBtn, heightBtn;
 /* Font of fancy text */
@@ -34,8 +34,20 @@ function setup() {
     60,
     font
   );
-  questionTwo = manager.generateFancyText("Choose the 'north gate'", 100, 200, 80, font); // First line
-  questionTwo_2 = manager.generateFancyText("from Suwon Hwaseong fortress", 100, 300, 80, font); // Second line
+  questionTwo = manager.generateFancyText(
+    "Choose the 'north gate'",
+    100,
+    200,
+    80,
+    font
+  ); // First line
+  questionTwo_2 = manager.generateFancyText(
+    "from Suwon Hwaseong fortress",
+    100,
+    300,
+    80,
+    font
+  ); // Second line
   questionThree = manager.generateFancyText(
     "Question three",
     100,
@@ -70,17 +82,17 @@ function draw() {
   }
 
   /* Scene01 -> Scene02 */
-  playBtn.mousePressed(() => {
+  btnPlay.mousePressed(() => {
     // Hide title and playbutton
     manager.hideFancyText(title);
-    manager.hideButton(playBtn);
+    manager.hideButton(btnPlay);
 
     // Display question one and multiple choices
     manager.displayFancyText(questionOne);
 
     // Display multiple choices
     manager.setValuesBtn("Arctic bear", 600, 400, 320, 70);
-    wrongBtnOne = manager.displayButton(
+    btnWrongOne = manager.displayButton(
       contentBtn,
       xPosBtn,
       yPosBtn,
@@ -89,7 +101,7 @@ function draw() {
     );
 
     manager.setValuesBtn("Penguin", 600, 500, 320, 70);
-    answerBtn = manager.displayButton(
+    btnAnswer = manager.displayButton(
       contentBtn,
       xPosBtn,
       yPosBtn,
@@ -98,68 +110,68 @@ function draw() {
     );
 
     manager.setValuesBtn("Arctic fox", 600, 600, 320, 70);
-    wrongBtnTwo = manager.displayButton(
+    btnWrongTwo = manager.displayButton(
       contentBtn,
       xPosBtn,
       yPosBtn,
       widthBtn,
       heightBtn
     );
-    
+
     // Move to the function execution screen when answer button is clicked
-    answerBtn.mousePressed(() => {
-    // Hide questionOne, answerBtn and wrongBtn
-    manager.hideFancyText(questionOne);
-    manager.hideButton(wrongBtnOne);
-    manager.hideButton(wrongBtnTwo);
-    manager.hideButton(answerBtn);
-    
-    // On the function execution screen, click the next button
-    manager.setValuesBtn("Next Question", width - 250, height - 200, 200, 70);
-    nextBtn = manager.displayButton(
-      contentBtn,
-      xPosBtn,
-      yPosBtn,
-      widthBtn,
-      heightBtn
-    );
-    
-    nextBtn.mousePressed(() => {
-      // Hide nextBtn
-      manager.hideButton(nextBtn);
-      
-      // Display question two and multiple choices
-      manager.displayFancyText(questionTwo);
-      manager.displayFancyText(questionTwo_2);
-  
-      // Display multiple choices
-      manager.setValuesBtn("Paldalmun Gate", 600, 400, 320, 70);
-      wrongBtnOne = manager.displayButton(
+    btnAnswer.mousePressed(() => {
+      // Hide questionOne, answerBtn and wrongBtn
+      manager.hideFancyText(questionOne);
+      manager.hideButton(btnWrongOne);
+      manager.hideButton(btnWrongTwo);
+      manager.hideButton(btnAnswer);
+
+      // On the function execution screen, click the next button
+      manager.setValuesBtn("Next Question", width - 250, height - 200, 200, 70);
+      btnNext = manager.displayButton(
         contentBtn,
         xPosBtn,
         yPosBtn,
         widthBtn,
         heightBtn
       );
-  
-      manager.setValuesBtn("Janganmun Gate", 600, 500, 320, 70);
-      answerBtn = manager.displayButton(
-        contentBtn,
-        xPosBtn,
-        yPosBtn,
-        widthBtn,
-        heightBtn
-      );
-  
-      manager.setValuesBtn("Hwaseomun Gate", 600, 600, 320, 70);
-      wrongBtnTwo = manager.displayButton(
-        contentBtn,
-        xPosBtn,
-        yPosBtn,
-        widthBtn,
-        heightBtn
-      );
+
+      btnNext.mousePressed(() => {
+        // Hide nextBtn
+        manager.hideButton(btnNext);
+
+        // Display question two and multiple choices
+        manager.displayFancyText(questionTwo);
+        manager.displayFancyText(questionTwo_2);
+
+        // Display multiple choices
+        manager.setValuesBtn("Paldalmun Gate", 600, 400, 320, 70);
+        btnWrongOne = manager.displayButton(
+          contentBtn,
+          xPosBtn,
+          yPosBtn,
+          widthBtn,
+          heightBtn
+        );
+
+        manager.setValuesBtn("Janganmun Gate", 600, 500, 320, 70);
+        btnAnswer = manager.displayButton(
+          contentBtn,
+          xPosBtn,
+          yPosBtn,
+          widthBtn,
+          heightBtn
+        );
+
+        manager.setValuesBtn("Hwaseomun Gate", 600, 600, 320, 70);
+        btnWrongTwo = manager.displayButton(
+          contentBtn,
+          xPosBtn,
+          yPosBtn,
+          widthBtn,
+          heightBtn
+        );
+      });
     });
-   });
   });
 }
