@@ -5,11 +5,61 @@ class Manager {
     this.height = h;
   }
 
+  // * We can here implement everything that needs to be assigned at the start of the program.
+  setInit() {
+    /* Instanciate title and questions with FancyText*/
+    title = manager.generateFancyText("QUESTION BOARD", 400, 200, 80, font);
+    questionOne = manager.generateFancyText(
+      "Choose the animal",
+      250,
+      200,
+      80,
+      font
+    ); // First line
+    questionOne_2 = manager.generateFancyText(
+      "which lives in 'Antarctica'",
+      250,
+      300,
+      80,
+      font
+    ); // Second line
+    questionTwo = manager.generateFancyText(
+      "Choose the 'north gate'",
+      100,
+      200,
+      80,
+      font
+    ); // First line
+    questionTwo_2 = manager.generateFancyText(
+      "from Suwon Hwaseong fortress",
+      100,
+      300,
+      80,
+      font
+    ); // Second line
+    questionThree = manager.generateFancyText(
+      "Choose the character who sang ",
+      100,
+      200,
+      80,
+      font
+    ); // First Line
+    questionThree_2 = manager.generateFancyText(
+      "‘show yourself’ in movie of the Frozen?",
+      100,
+      300,
+      70,
+      font
+    ); // Second Line
+
+    title.need = 1; // We need to display title when we start our app.
+  }
+
   displayInitScreen() {
     createCanvas(this.width, this.height);
     this.setValuesBtn("PLAY!", 600, 600, 320, 70);
-    btnPlay = this.displayButton(
-      contentBtn,
+    btnPlay = this.generateBtn(
+      textBtn,
       xPosBtn,
       yPosBtn,
       widthBtn,
@@ -35,24 +85,79 @@ class Manager {
   }
 
   /* Button */
-  setValuesBtn(content, x, y, w, h) {
-    contentBtn = content;
+  setValuesBtn(text, x, y, w, h) {
+    textBtn = text;
     xPosBtn = x;
     yPosBtn = y;
     widthBtn = w;
     heightBtn = h;
   }
 
-  displayButton(text, positionX, positionY, width, height) {
-    const button = createButton(text);
-    button.position(positionX, positionY);
-    button.size(width, height);
+  generateBtn(text, positionX, positionY, width, height) {
+    const btn = createButton(text);
+    btn.position(positionX, positionY);
+    btn.size(width, height);
 
-    return button;
+    return btn;
   }
 
-  hideButton(button) {
-    button.elt.style.display = "none";
+  hideBtn(btn) {
+    btn.elt.style.display = "none";
+  }
+
+  drawQuestionScene(firstLine, secondLine, answer, wrong1, wrong2) {
+    this.displayFancyText(firstLine);
+    this.displayFancyText(secondLine);
+
+    this.setValuesBtn(answer, 600, 500, 320, 70);
+    btnAnswer = manager.generateBtn(
+      textBtn,
+      xPosBtn,
+      yPosBtn,
+      widthBtn,
+      heightBtn
+    );
+
+    this.setValuesBtn(wrong1, 600, 400, 320, 70);
+    btnWrongOne = manager.generateBtn(
+      textBtn,
+      xPosBtn,
+      yPosBtn,
+      widthBtn,
+      heightBtn
+    );
+
+    this.setValuesBtn(wrong2, 600, 600, 320, 70);
+    btnWrongTwo = manager.generateBtn(
+      textBtn,
+      xPosBtn,
+      yPosBtn,
+      widthBtn,
+      heightBtn
+    );
+
+    if(title.need === 1) this.hideFancyText(title);
+    if(btnPlay.elt.style.siplay !== "none") this.hideBtn(btnPlay);
+  }
+
+  hideQuestionScene(firstLine, secondLine, btn1, btn2, btn3) {
+    this.hideFancyText(firstLine);
+    this.hideFancyText(secondLine);
+
+    this.hideBtn(btn1);
+    this.hideBtn(btn2);
+    this.hideBtn(btn3);
+
+    this.setValuesBtn("Next", width - 200, height - 100, 150, 70);
+    btnNext = manager.generateBtn(textBtn, xPosBtn, yPosBtn, widthBtn, heightBtn);
+  }
+
+  // TODO : 메인 화면 생성 함수
+  // drawMainScene(){};
+
+  hideMainScene(btn){
+    this.hideBtn(btn);
+    redraw();
   }
 
   // Use p5.js example
