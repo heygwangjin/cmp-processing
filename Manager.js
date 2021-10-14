@@ -52,7 +52,10 @@ class Manager {
       font
     ); // Second Line
 
+    /* Set need variables*/
     title.need = 1; // We need to display title when we start our app.
+    needGradient = 1;
+    needPenguinScene = 0;
   }
 
   displayInitScreen() {
@@ -152,9 +155,26 @@ class Manager {
     btnNext = manager.generateBtn(textBtn, xPosBtn, yPosBtn, widthBtn, heightBtn);
   }
 
-  // TODO : 메인 화면 생성 함수
-  // drawMainScene(){};
+  /* Background Control */
+  turnOffGradient(){
+    needGradient = 0;
+  }
 
+  turnOnGradient(){
+    needGradient = 1;
+  }
+
+  turnOnPenguinScene(){
+    needPenguinScene = 1;
+  }
+
+  turnOffPenguinScene(){
+    needPenguinScene = 0;
+  }
+
+  // TODO : 사용한 텍스트 배열 null로 보내서 메모리 덜 사용하기
+
+  /* Hide btn and main scene */
   hideMainScene(btn){
     this.hideBtn(btn);
     redraw();
