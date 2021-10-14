@@ -12,13 +12,19 @@ let textBtn, xPosBtn, yPosBtn, widthBtn, heightBtn;
 let font;
 /* Variables to store fancy text */
 let title, questionOne, questionOne_2, questionTwo, questionTwo_2, questionThree, questionThree_2;
+/* Variables to change background */
+let needGradient, needPenguinScene;
+/* background image */
+let antarctica;
 
 const manager = new Manager(WIDTH_CANVAS, HEIGHT_CANVAS);
+const managerPenguin = new ManagerPenguin();
 
 function preload() {
   font = loadFont(
     "http://themes.googleusercontent.com/static/fonts/earlyaccess/nanumgothic/v3/NanumGothic-Regular.ttf"
   );
+  antarctica = loadImage("data/antarctica.jpeg");
 }
 
 function setup() {
@@ -27,11 +33,16 @@ function setup() {
 }
 
 function draw() {
-  /* Draw background */
-  // TODO : 각자 기능 화면 실행할 때는 수행 안되게 하기
-  manager.setGradient(0, 0, manager.width, manager.height, color(65), color(50), Y_AXIS);
+  /* Draw Main Scene */
+  if (needGradient) {
+    manager.setGradient(0, 0, manager.width, manager.height, color(65), color(50), Y_AXIS);
+  } else if (needPenguinScene) {
+    managerPenguin.drawPenguinScene();
+    managerPenguin.controlPenguin();
+    drawSprites();
+  }
 
-  /* Scene flow. */
+  /* Draw Question Scene. */
   if (title.need) {
     title.drawFancyText();
   } else if (questionOne.need && questionOne_2.need) {
@@ -51,10 +62,19 @@ function draw() {
 
     /* Question01 -> Question01-Main */
     btnAnswer.mousePressed(() => {
+      /* Previous setting off */
       manager.hideQuestionScene(questionOne, questionOne_2, btnAnswer, btnWrongOne, btnWrongTwo);
+      manager.turnOffGradient();
+      /* Penguin setting on */
+      manager.turnOnPenguinScene();
+      managerPenguin.createPenguins(4);
 
       /* Question01-Main -> Question02 */
       btnNext.mousePressed(() => {
+        /* Previous setting off */
+        manager.turnOffPenguinScene();
+        /* Question02 setting on */
+        manager.turnOnGradient();
         manager.drawQuestionScene(questionTwo, questionTwo_2, "Paldalmun Gate", "Janganmun Gate", "Hwaseomun Gate");
         manager.hideMainScene(btnNext);
 
