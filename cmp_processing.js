@@ -13,18 +13,25 @@ let font;
 /* Variables to store fancy text */
 let title, questionOne, questionOne_2, questionTwo, questionTwo_2, questionThree, questionThree_2;
 /* Variables to change background */
-let needGradient, needPenguinScene;
+let needGradient, needPenguinScene, needGateScene;
 /* background image */
-let antarctica;
+let antarctica, gate;
+/* sound */
+let song;
 
 const manager = new Manager(WIDTH_CANVAS, HEIGHT_CANVAS);
 const managerPenguin = new ManagerPenguin();
+const managerGate = new ManagerGate();
 
 function preload() {
   font = loadFont(
     "http://themes.googleusercontent.com/static/fonts/earlyaccess/nanumgothic/v3/NanumGothic-Regular.ttf"
   );
   antarctica = loadImage("data/antarctica.jpeg");
+  gate = loadImage("data/Janganmun.jpg");
+  
+  soundFormats('mp3');
+  song = loadSound("data/music.mp3");
 }
 
 function setup() {
@@ -40,6 +47,8 @@ function draw() {
     managerPenguin.drawPenguinScene();
     managerPenguin.controlPenguin();
     drawSprites();
+  } else if (needGateScene){
+    managerGate.drawGateScene();
   }
 
   /* Draw Question Scene. */
@@ -81,9 +90,16 @@ function draw() {
         /* Question02 -> Question02-Main */
         btnAnswer.mousePressed(() => {
           manager.hideQuestionScene(questionTwo, questionTwo_2, btnAnswer, btnWrongOne, btnWrongTwo);
-
+         
+          song.play();
+          manager.turnOffGradient();
+          manager.turnOnGateScene();
+          
           /* Question02-Main -> Question03*/
           btnNext.mousePressed(() => {
+            song.pause();
+            manager.turnOffGateScene();
+            manager.turnOnGradient();
             manager.drawQuestionScene(questionThree, questionThree_2, "Anna", "Elsa", "Olaf");
             manager.hideMainScene(btnNext);
 

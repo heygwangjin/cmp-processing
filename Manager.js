@@ -171,6 +171,14 @@ class Manager {
   turnOffPenguinScene(){
     needPenguinScene = 0;
   }
+  
+  turnOnGateScene(){
+    needGateScene = 1;
+  }
+  
+  turnOffGateScene(){
+    needGateScene = 0;
+  }
 
   // TODO : 사용한 텍스트 배열 null로 보내서 메모리 덜 사용하기
 
