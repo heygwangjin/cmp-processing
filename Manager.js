@@ -56,6 +56,7 @@ class Manager {
     title.need = 1; // We need to display title when we start our app.
     needGradient = 1;
     needPenguinScene = 0;
+
   }
 
   displayInitScreen() {
@@ -171,7 +172,7 @@ class Manager {
   turnOffPenguinScene(){
     needPenguinScene = 0;
   }
-
+  
   // TODO : 사용한 텍스트 배열 null로 보내서 메모리 덜 사용하기
 
   /* Hide btn and main scene */

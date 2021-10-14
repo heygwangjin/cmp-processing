@@ -53,6 +53,7 @@ function preload() {
     "http://themes.googleusercontent.com/static/fonts/earlyaccess/nanumgothic/v3/NanumGothic-Regular.ttf"
   );
   antarctica = loadImage("data/antarctica.jpeg");
+  elsa=loadImage("elsa.jpg");
 }
 
 function setup() {
@@ -134,7 +135,6 @@ function draw() {
               manager.hideQuestionScene(questionThree, questionThree_2, btnAnswer, btnWrongOne, btnWrongTwo);
               manager.hideMainScene(btnNext);
               manager.turnOffGradient();
-              snowdraw();
               //manager.turnOnSnowScene();
            
             });
