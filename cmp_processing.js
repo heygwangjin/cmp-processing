@@ -4,6 +4,33 @@ const X_AXIS = 2;
 const WIDTH_CANVAS = 1450;
 const HEIGHT_CANVAS = 800;
 
+const SNOW_COLOR = "snow";
+const SNOWFLAKES_PER_LAYER = 200;
+const MAX_SIZE = 10;
+//const GRAVITY = 0.5;
+const LAYER_COUNT = 4;
+
+const SKY_COLOR = "skyblue";
+const SKY_SPACE = 0.4;
+const SKY_AMP = 150;
+const SKY_ZOOM = 0.0025;
+const SKY_LAYER_OFFSET = 3;
+
+const WIND_SPEED = 1;
+const WIND_CHANGE = 0.0025;
+
+const SUN_COLOR = "#FFF2AD";
+const SUN_GLOW = 100;
+const SUN_RADIUS = 150;
+
+const RIDGE_TOP_COLOR = "#BCCEDD";
+const RIDGE_BOT_COLOR = "#7E9CB9";
+const RIDGE_STEP = 4;
+const RIDGE_AMP = 250;
+const RIDGE_ZOOM = 0.005;
+  let snow=0.3;
+
+const SNOWFLAKES = [];
 /* Buttons */
 let btnPlay, btnAnswer, btnWrongOne, btnWrongTwo, btnNext;
 /* Values for creating button */
@@ -13,7 +40,7 @@ let font;
 /* Variables to store fancy text */
 let title, questionOne, questionOne_2, questionTwo, questionTwo_2, questionThree, questionThree_2;
 /* Variables to change background */
-let needGradient, needPenguinScene, needGateScene;
+let needGradient, needPenguinScene, needGateScene,needSnowScene;
 /* background image */
 let antarctica, gate;
 /* sound */
@@ -22,6 +49,7 @@ let song;
 const manager = new Manager(WIDTH_CANVAS, HEIGHT_CANVAS);
 const managerPenguin = new ManagerPenguin();
 const managerGate = new ManagerGate();
+const managersnow = new ManagerSnow();
 
 function preload() {
   font = loadFont(
@@ -37,6 +65,17 @@ function preload() {
 function setup() {
   manager.setInit();
   manager.displayInitScreen();
+     for (let l = 0; l < LAYER_COUNT; l++) {
+    SNOWFLAKES.push([]);
+    for (let i = 0; i < SNOWFLAKES_PER_LAYER; i++) {
+      SNOWFLAKES[l].push({
+        x: random(width),
+        y: random(height),
+        mass: random(0.75, 1.25),
+        l: l + 1
+      });
+    }
+  }
 }
 
 function draw() {
@@ -49,7 +88,11 @@ function draw() {
     drawSprites();
   } else if (needGateScene){
     managerGate.drawGateScene();
+  }else if(needSnowScene){
+     noStroke();
+     snowdraw();
   }
+
 
   /* Draw Question Scene. */
   if (title.need) {
@@ -107,6 +150,8 @@ function draw() {
             btnAnswer.mousePressed(() => {
               manager.hideQuestionScene(questionThree, questionThree_2, btnAnswer, btnWrongOne, btnWrongTwo);
               manager.hideMainScene(btnNext);
+              manager.turnOffGradient();
+              manager.turnOnSnowScene();
             });
           });
         });
