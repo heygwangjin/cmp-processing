@@ -47,7 +47,7 @@ let antarctica, gate;
 let song;
 
 const manager = new Manager(WIDTH_CANVAS, HEIGHT_CANVAS);
-const managerPenguin = new ManagerPenguin();
+const managerGame = new ManagerGame();
 const managerGate = new ManagerGate();
 const managersnow = new ManagerSnow();
 
@@ -65,7 +65,7 @@ function preload() {
 function setup() {
   manager.setInit();
   manager.displayInitScreen();
-     for (let l = 0; l < LAYER_COUNT; l++) {
+    for (let l = 0; l < LAYER_COUNT; l++) {
     SNOWFLAKES.push([]);
     for (let i = 0; i < SNOWFLAKES_PER_LAYER; i++) {
       SNOWFLAKES[l].push({
@@ -83,14 +83,16 @@ function draw() {
   if (needGradient) {
     manager.setGradient(0, 0, manager.width, manager.height, color(65), color(50), Y_AXIS);
   } else if (needPenguinScene) {
-    managerPenguin.drawPenguinScene();
-    managerPenguin.controlPenguin();
+    managerGame.drawPenguinScene();
+    managerGame.controlPenguin();
+    managerGame.movePenguinRight();
+    managerGame.movePenguinLeft();
     drawSprites();
   } else if (needGateScene){
     managerGate.drawGateScene();
   }else if(needSnowScene){
-     noStroke();
-     snowdraw();
+    noStroke();
+    snowdraw();
   }
 
 
@@ -119,8 +121,9 @@ function draw() {
       manager.hideQuestionScene(questionOne, questionOne_2, btnAnswer, btnWrongOne, btnWrongTwo);
       manager.turnOffGradient();
       /* Penguin setting on */
+      manager.changeBtnPos(btnNext, btnNext.x + 20, 20);
       manager.turnOnPenguinScene();
-      managerPenguin.createPenguins(4);
+      managerGame.createPenguin();
 
       /* Question01-Main -> Question02 */
       btnNext.mousePressed(() => {

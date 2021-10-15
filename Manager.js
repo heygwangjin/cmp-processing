@@ -113,6 +113,10 @@ class Manager {
     btn.elt.style.display = "none";
   }
 
+  changeBtnPos(btn, x, y) {
+    btn.position(x, y);
+  }
+
   drawQuestionScene(firstLine, secondLine, answer, wrong1, wrong2) {
     this.displayFancyText(firstLine);
     this.displayFancyText(secondLine);
@@ -183,15 +187,13 @@ class Manager {
     needGateScene = 1;
   }
   
-  
   turnOffGateScene(){
     needGateScene = 0;
   }
+
   turnOnSnowScene(){
     needSnowScene = 1;
   }
-  
-  // TODO : 사용한 텍스트 배열 null로 보내서 메모리 덜 사용하기
 
   /* Hide btn and main scene */
   hideMainScene(btn){
