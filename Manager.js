@@ -80,6 +80,10 @@ class Manager {
     return fancyText;
   }
 
+  deleteFancyText(fancyText) {
+    fancyText.vehicles = [];
+  }
+
   displayFancyText(fancyText) {
     fancyText.need = 1;
   }
@@ -147,6 +151,8 @@ class Manager {
   hideQuestionScene(firstLine, secondLine, btn1, btn2, btn3) {
     this.hideFancyText(firstLine);
     this.hideFancyText(secondLine);
+    this.deleteFancyText(firstLine);
+    this.deleteFancyText(secondLine);
 
     this.hideBtn(btn1);
     this.hideBtn(btn2);

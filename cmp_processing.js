@@ -111,6 +111,7 @@ function draw() {
   /* Initial Scene -> Question01 */
   btnPlay.mousePressed(() => {
     manager.drawQuestionScene(questionOne, questionOne_2, "Penguin", "Arctic bear", "Arctic fox");
+    manager.deleteFancyText(title);
 
     /* Question01 -> Question01-Main */
     btnAnswer.mousePressed(() => {
