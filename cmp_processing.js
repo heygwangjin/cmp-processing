@@ -66,7 +66,6 @@ function setup() {
   manager.setInit();
   manager.displayInitScreen();
   weather_setup();
-
 }
 
 function draw() {
@@ -75,14 +74,14 @@ function draw() {
     manager.setGradient(0, 0, manager.width, manager.height, color(65), color(50), Y_AXIS);
   } else if (needPenguinScene) {
     managerGame.drawPenguinScene();
-    managerGame.createSnowball(5, 3, .1);
-    managerGame.movePenguinRight(1, 0);
-    managerGame.movePenguinLeft(1, 180);
+    managerGame.createSnowball(time, speedSnowball, scaleSnowball);
+    managerGame.movePenguinRight(1, RIGHT);
+    managerGame.movePenguinLeft(1, LEFT);
     managerGame.controlPenguin();
     managerGame.checkGameOver();
-    managerGame.removeSnowball();
-
-    // TODO : replay the game
+    managerGame.removeSnowball(penguin.position.y);
+    managerGame.changeLevel();
+    managerGame.replay();
     drawSprites();
   } else if (needGateScene){
     managerGate.drawGateScene();

@@ -7,6 +7,7 @@ class Manager {
   constructor(w, h) {
     this.width = w;
     this.height = h;
+    this.startingTime = 0;
   }
 
   // * We can here implement everything that needs to be assigned at the start of the program.
@@ -181,6 +182,7 @@ class Manager {
 
   turnOnPenguinScene(){
     needPenguinScene = 1;
+    managerGame.overTime = millis() / THOUSAND;
   }
 
   turnOffPenguinScene(){
