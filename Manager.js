@@ -80,6 +80,10 @@ class Manager {
     return fancyText;
   }
 
+  deleteFancyText(fancyText) {
+    fancyText.vehicles = [];
+  }
+
   displayFancyText(fancyText) {
     fancyText.need = 1;
   }
@@ -107,6 +111,10 @@ class Manager {
 
   hideBtn(btn) {
     btn.elt.style.display = "none";
+  }
+
+  changeBtnPos(btn, x, y) {
+    btn.position(x, y);
   }
 
   drawQuestionScene(firstLine, secondLine, answer, wrong1, wrong2) {
@@ -147,6 +155,8 @@ class Manager {
   hideQuestionScene(firstLine, secondLine, btn1, btn2, btn3) {
     this.hideFancyText(firstLine);
     this.hideFancyText(secondLine);
+    this.deleteFancyText(firstLine);
+    this.deleteFancyText(secondLine);
 
     this.hideBtn(btn1);
     this.hideBtn(btn2);
@@ -177,15 +187,13 @@ class Manager {
     needGateScene = 1;
   }
   
-  
   turnOffGateScene(){
     needGateScene = 0;
   }
+
   turnOnSnowScene(){
     needSnowScene = 1;
   }
-  
-  // TODO : 사용한 텍스트 배열 null로 보내서 메모리 덜 사용하기
 
   /* Hide btn and main scene */
   hideMainScene(btn){

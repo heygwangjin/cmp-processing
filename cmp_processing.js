@@ -47,10 +47,10 @@ let antarctica, gate;
 let song;
 
 const manager = new Manager(WIDTH_CANVAS, HEIGHT_CANVAS);
-const managerPenguin = new ManagerPenguin();
+const managerGame = new ManagerGame();
 const managerGate = new ManagerGate();
 const managersnow = new ManagerSnow();
-
+const managerweather=new ManageWeather();
 function preload() {
   font = loadFont(
     "http://themes.googleusercontent.com/static/fonts/earlyaccess/nanumgothic/v3/NanumGothic-Regular.ttf"
@@ -65,17 +65,8 @@ function preload() {
 function setup() {
   manager.setInit();
   manager.displayInitScreen();
-     for (let l = 0; l < LAYER_COUNT; l++) {
-    SNOWFLAKES.push([]);
-    for (let i = 0; i < SNOWFLAKES_PER_LAYER; i++) {
-      SNOWFLAKES[l].push({
-        x: random(width),
-        y: random(height),
-        mass: random(0.75, 1.25),
-        l: l + 1
-      });
-    }
-  }
+  weather_setup();
+
 }
 
 function draw() {
@@ -83,14 +74,16 @@ function draw() {
   if (needGradient) {
     manager.setGradient(0, 0, manager.width, manager.height, color(65), color(50), Y_AXIS);
   } else if (needPenguinScene) {
-    managerPenguin.drawPenguinScene();
-    managerPenguin.controlPenguin();
+    managerGame.drawPenguinScene();
+    managerGame.controlPenguin();
+    managerGame.movePenguinRight();
+    managerGame.movePenguinLeft();
     drawSprites();
   } else if (needGateScene){
     managerGate.drawGateScene();
   }else if(needSnowScene){
-     noStroke();
-     snowdraw();
+    noStroke();
+    frozen_draw();
   }
 
 
@@ -111,6 +104,7 @@ function draw() {
   /* Initial Scene -> Question01 */
   btnPlay.mousePressed(() => {
     manager.drawQuestionScene(questionOne, questionOne_2, "Penguin", "Arctic bear", "Arctic fox");
+    manager.deleteFancyText(title);
 
     /* Question01 -> Question01-Main */
     btnAnswer.mousePressed(() => {
@@ -118,8 +112,9 @@ function draw() {
       manager.hideQuestionScene(questionOne, questionOne_2, btnAnswer, btnWrongOne, btnWrongTwo);
       manager.turnOffGradient();
       /* Penguin setting on */
+      manager.changeBtnPos(btnNext, btnNext.x + 20, 20);
       manager.turnOnPenguinScene();
-      managerPenguin.createPenguins(4);
+      managerGame.createPenguin();
 
       /* Question01-Main -> Question02 */
       btnNext.mousePressed(() => {
