@@ -45,6 +45,7 @@ let needGradient, needPenguinScene, needGateScene,needSnowScene;
 let antarctica, gate;
 /* sound */
 let song;
+let img;
 
 const manager = new Manager(WIDTH_CANVAS, HEIGHT_CANVAS);
 const managerGame = new ManagerGame();
@@ -56,7 +57,7 @@ function preload() {
     "http://themes.googleusercontent.com/static/fonts/earlyaccess/nanumgothic/v3/NanumGothic-Regular.ttf"
   );
   antarctica = loadImage("data/antarctica.jpeg");
-  gate = loadImage("data/Janganmun.jpg");
+  gate = loadImage("data/Janganmun.png");
   
   soundFormats('mp3');
   song = loadSound("data/music.mp3");
@@ -85,6 +86,7 @@ function draw() {
     drawSprites();
   } else if (needGateScene){
     managerGate.drawGateScene();
+    managerGate.gateFilter();
   }else if(needSnowScene){
     noStroke();
     frozen_draw();
@@ -132,6 +134,7 @@ function draw() {
         /* Question02 -> Question02-Main */
         btnAnswer.mousePressed(() => {
           manager.hideQuestionScene(questionTwo, questionTwo_2, btnAnswer, btnWrongOne, btnWrongTwo);
+          background(10);
           song.play();
           manager.turnOffGradient();
           manager.turnOnGateScene();
