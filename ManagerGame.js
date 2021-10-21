@@ -20,11 +20,12 @@ let time, speedSnowball, scaleSnowball;
 class ManagerGame {
   constructor() {
     this.isEnd = 0;
-    this.startingTime = 0;
     this.overTime = 0;
     this.elapsedTime = 0;
     this.win = 0;
     this.lose = 0;
+    this.level = 1;
+    this.colorLevel;
   }
   /**
    * Draw initial scene of penguin game.
@@ -53,8 +54,8 @@ class ManagerGame {
   createPenguin(w, h, sc, f) {
     penguin = createSprite(w, h);
     penguin.scale = sc; //penguin.debug = true;
-    penguin.setCollider("rectangle", 0, 0, 170, 310);
     penguin.friction = f;
+    penguin.setCollider("rectangle", 0, 0, 170, 310);
     penguin.addAnimation("penguin", "data/penguin.png");
   }
 
@@ -128,12 +129,11 @@ class ManagerGame {
       if (snowball.overlap(penguin)) {
         penguin.remove();
         this.lose = 1;
+        this.isEnd = 1;
       }
     });
 
-    if (this.lose) {
-      this.isEnd = 1;
-
+    if (this.lose && this.isEnd) {
       textSize(26);
       text("GAME OVER 😢", WIDTH_CANVAS / 2, 40);
       text(
@@ -143,9 +143,7 @@ class ManagerGame {
       );
     }
 
-    if (this.win) {
-      this.isEnd = 1;
-
+    if (this.win && this.isEnd) {
       textSize(26);
       text("CONGRATULATIONS 🎉", WIDTH_CANVAS / 2, 40);
       text("You win the game 🏆", WIDTH_CANVAS / 2, 100);
@@ -182,33 +180,60 @@ class ManagerGame {
     const sizeLevel = 36;
 
     textSize(sizeLevel);
+
+    // Display the level of the game when the user dies.
+    if(this.isEnd) {
+      this.createTextLevel(this.level, this.colorLevel, WIDTH_CANVAS/2, 200);
+      return;
+    }
+
+    // Difficulty depending on the level of the game.
     if (this.elapsedTime <= 10) {
-      fill(WHITE);
-      text("Level 1", xPosLevel, yPosLevel);
+      this.level = "1";
+      this.colorLevel = WHITE;
       this.setDifficulty(3, 6, 0.1, penguin.friction);
+      this.createTextLevel(this.level, this.colorLevel, xPosLevel, yPosLevel);
     } else if (this.elapsedTime <= 20) {
-      fill(WHITE);
-      text("Level 2", xPosLevel, yPosLevel);
+      this.level = "2";
+      this.colorLevel = WHITE;
       this.setDifficulty(3, 8, 0.15, 0.09);
+      this.createTextLevel(this.level, this.colorLevel, xPosLevel, yPosLevel);
     } else if (this.elapsedTime <= 30) {
-      fill(YELLOW);
-      text("Level 3", xPosLevel, yPosLevel);
+      this.level = "3";
+      this.colorLevel = YELLOW;
       this.setDifficulty(2, 10, 0.2, 0.07);
+      this.createTextLevel(this.level, this.colorLevel, xPosLevel, yPosLevel);
     } else if (this.elapsedTime <= yPosLevel) {
-      fill(YELLOW);
-      text("Level 4", xPosLevel, yPosLevel);
+      this.level = "4";
+      this.colorLevel = YELLOW;
       this.setDifficulty(2, 12, 0.24, 0.05);
+      this.createTextLevel(this.level, this.colorLevel, xPosLevel, yPosLevel);
     } else if (this.elapsedTime <= 50) {
-      fill(RED);
-      text("Level 5", xPosLevel, yPosLevel);
+      this.level = "5";
+      this.colorLevel = RED;
       this.setDifficulty(1.5, 13, 0.27, 0.04);
+      this.createTextLevel(this.level, this.colorLevel, xPosLevel, yPosLevel);
     } else if (this.elapsedTime <= 65) {
-      fill(RED);
-      text("Level 6", xPosLevel, yPosLevel);
-      this.setDifficulty(1.5, 13, 0.3, 0.04);
+      this.level = "6";
+      this.colorLevel = RED;
+      this.setDifficulty(1.5, 15, 0.27, 0.04);
+      this.createTextLevel(this.level, this.colorLevel, xPosLevel, yPosLevel);
     } else if (this.elapsedTime > 65) {
       this.win = 1;
+      this.isEnd = 1;
     }
+  }
+
+  /**
+   * Create text about game level.
+   * @param {String} lv level of the game.
+   * @param {String} col color in hex code.
+   * @param {Number} x x position of level text.
+   * @param {Number} y y position of level text.
+   */
+  createTextLevel(lv, col, x, y) {
+    fill(col);
+    text("Level " + lv, x, y);
   }
 
   /**
