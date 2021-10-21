@@ -1,5 +1,7 @@
-// Gwang-jin Kim
-// We will use this class for creating our visual title and questions.
+/**
+ * Created by Gwang Jin Kim on 10/1/21.
+ * This class is responsible for creating visual fancy text.
+ */
 class FancyText {
   constructor(text, x, y, size, font) {
     this.text = text;
