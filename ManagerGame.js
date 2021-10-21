@@ -7,11 +7,16 @@
 const RIGHT = 0;
 const LEFT = 180;
 const THOUSAND = 1000;
+const WHITE = '#FFFFFF';
+const RED = '#FF0000';
+const YELLOW = '#FFFF00';
 
 let penguin;
 let snowballs = [];
 let time, speedSnowball, scaleSnowball;
 
+// TODO: 펭귄이 캔버스 화면을 벗어나는 것 방지
+// TODO: 마지막 단계는 눈이 핵폭탄을 변화
 class ManagerGame {
   constructor() {
     this.isEnd = 0;
@@ -42,11 +47,12 @@ class ManagerGame {
    * Create penguin sprite.
    * @param {Number} w width of penguin.
    * @param {Number} h height of penguin.
-   * @param {Number} s scale of penguin image.
+   * @param {Number} sc scale of penguin image.
    * @param {Number} f friction of penguin.
    */
-  createPenguin(w, h, s, f) {
-    penguin = createSprite(w, h); penguin.scale = s; //penguin.debug = true;
+  createPenguin(w, h, sc, f) {
+    penguin = createSprite(w, h);
+    penguin.scale = sc; //penguin.debug = true;
     penguin.setCollider("rectangle", 0, 0, 170, 310);
     penguin.friction = f;
     penguin.addAnimation("penguin", "data/penguin.png");
@@ -54,24 +60,24 @@ class ManagerGame {
 
   /**
    * Move penguin to the right.
-   * @param {Number} s scalar speed to add of penguin.
+   * @param {Number} sp scalar speed to add of penguin.
    * @param {Number} a direction of penguin in degrees.
    */
-  movePenguinRight(s, a){
+  movePenguinRight(sp, a) {
     if (keyIsPressed === true && key === "d" && penguin.position.x < 1355) {
-      penguin.addSpeed(s, a);
+      penguin.addSpeed(sp, a);
     }
   }
 
   /**
    * Move penguin to the left.
-   * @param {Number} s scalar speed to add of penguin.
+   * @param {Number} sp scalar speed to add of penguin.
    * @param {Number} a direction of penguin in degrees.
    */
-  movePenguinLeft(s, a){
+  movePenguinLeft(sp, a) {
     if (keyIsPressed === true && key === "a" && penguin.position.x > 94) {
-      penguin.addSpeed(s, a);
-    };
+      penguin.addSpeed(sp, a);
+    }
   }
 
   controlPenguin() {
@@ -92,7 +98,9 @@ class ManagerGame {
    */
   createSnowball(t, sp, sc) {
     if (millis() % t === 0 && !this.isEnd) {
-      const snowball = createSprite(random(0, WIDTH_CANVAS), 20); snowball.scale = sc; snowball.debug = true;
+      const snowball = createSprite(random(0, WIDTH_CANVAS), 20);
+      snowball.scale = sc;
+      // snowball.debug = true;
       snowball.setCollider("circle", 0, 0, 300);
       snowball.addAnimation("snowball", "data/snowball.png");
       snowball.addSpeed(sp, 90);
@@ -106,34 +114,46 @@ class ManagerGame {
    * @param {Number} range range of snowball that you want to remove.
    */
   removeSnowball(range) {
-    snowballs.forEach(snowball => {if (snowball.position.y >= range) snowball.remove()});
+    snowballs.forEach((snowball) => {
+      if (snowball.position.y >= range) snowball.remove();
+    });
   }
 
   /**
    * Check game over.
    */
   checkGameOver() {
-    snowballs.forEach(snowball => {
+    // When penguin is hit by snowball.
+    snowballs.forEach((snowball) => {
       if (snowball.overlap(penguin)) {
         penguin.remove();
         this.lose = 1;
       }
     });
 
-    /* LOSE !! */
     if (this.lose) {
       this.isEnd = 1;
 
       textSize(26);
-      text("GAME OVER 😢", WIDTH_CANVAS/2, 40);
-      text("Press 'r' if you want to see the penguin again! 🐧", WIDTH_CANVAS/2, 100);
-    } else if(this.win) {
+      text("GAME OVER 😢", WIDTH_CANVAS / 2, 40);
+      text(
+        "Press 'r' if you want to see the penguin again! 🐧",
+        WIDTH_CANVAS / 2,
+        100
+      );
+    }
+
+    if (this.win) {
       this.isEnd = 1;
 
       textSize(26);
-      text("CONGRATULATIONS 🎉", WIDTH_CANVAS/2, 40);
-      text("You win the game 🏆", WIDTH_CANVAS/2, 100);
-      text("Press 'r' if you want to play with penguin again! 🐧", WIDTH_CANVAS/2, 150);
+      text("CONGRATULATIONS 🎉", WIDTH_CANVAS / 2, 40);
+      text("You win the game 🏆", WIDTH_CANVAS / 2, 100);
+      text(
+        "Press 'r' if you want to play with penguin again! 🐧",
+        WIDTH_CANVAS / 2,
+        150
+      );
     }
   }
 
@@ -142,31 +162,50 @@ class ManagerGame {
    * @param {Number} t seconds that make snow fall.
    * @param {Number} sp scalar speed to add at which snow fall.
    * @param {Number} sc scale at which snow create.
+   * @param {Number} f friction of penguin sprite.
    */
-  setDifficulty(t, sp, sc) {
+  setDifficulty(t, sp, sc, f) {
     time = t;
     speedSnowball = sp;
     scaleSnowball = sc;
+    penguin.friction = f;
   }
 
   /**
    * Change the level of the game depending on elapsed time.
    */
   changeLevel() {
-    this.elapsedTime = (millis() / THOUSAND) - this.overTime;
+    this.elapsedTime = millis() / THOUSAND - this.overTime;
 
+    const xPosLevel = 370;
+    const yPosLevel = 40;
+    const sizeLevel = 36;
+
+    textSize(sizeLevel);
     if (this.elapsedTime <= 10) {
-      this.setDifficulty(3, 6, .1);
+      fill(WHITE);
+      text("Level 1", xPosLevel, yPosLevel);
+      this.setDifficulty(3, 6, 0.1, penguin.friction);
     } else if (this.elapsedTime <= 20) {
-      this.setDifficulty(2, 8, .15);
+      fill(WHITE);
+      text("Level 2", xPosLevel, yPosLevel);
+      this.setDifficulty(3, 8, 0.15, 0.09);
     } else if (this.elapsedTime <= 30) {
-      this.setDifficulty(1.5, 10, .2);
-    } else if (this.elapsedTime <= 40) {
-      this.setDifficulty(1.5, 12, .24);
+      fill(YELLOW);
+      text("Level 3", xPosLevel, yPosLevel);
+      this.setDifficulty(2, 10, 0.2, 0.07);
+    } else if (this.elapsedTime <= yPosLevel) {
+      fill(YELLOW);
+      text("Level 4", xPosLevel, yPosLevel);
+      this.setDifficulty(2, 12, 0.24, 0.05);
     } else if (this.elapsedTime <= 50) {
-      this.setDifficulty(1.3, 13, .27);
+      fill(RED);
+      text("Level 5", xPosLevel, yPosLevel);
+      this.setDifficulty(1.5, 13, 0.27, 0.04);
     } else if (this.elapsedTime <= 65) {
-      this.setDifficulty(1.2, 14, .3);
+      fill(RED);
+      text("Level 6", xPosLevel, yPosLevel);
+      this.setDifficulty(1.5, 13, 0.3, 0.04);
     } else if (this.elapsedTime > 65) {
       this.win = 1;
     }
@@ -185,7 +224,7 @@ class ManagerGame {
 
       this.overTime = millis() / THOUSAND; // update game over time.
 
-      this.createPenguin(WIDTH_CANVAS/2, HEIGHT_CANVAS - 170, .5, .11);
+      this.createPenguin(WIDTH_CANVAS / 2, HEIGHT_CANVAS - 170, 0.5, 0.11);
       this.removeSnowball(0);
       snowballs.length = 0;
     }
