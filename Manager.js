@@ -1,8 +1,13 @@
-// Gwang-jin Kim
+/**
+ * Created by Gwang Jin Kim on 9/30/21.
+ * This class is responsible for managing the scenes of question board
+ * and the components to make scene.
+ */
 class Manager {
   constructor(w, h) {
     this.width = w;
     this.height = h;
+    this.startingTime = 0;
   }
 
   // * We can here implement everything that needs to be assigned at the start of the program.
@@ -177,10 +182,13 @@ class Manager {
 
   turnOnPenguinScene(){
     needPenguinScene = 1;
+    managerGame.overTime = millis() / THOUSAND;
   }
 
   turnOffPenguinScene(){
     needPenguinScene = 0;
+    snowballs = null;
+    penguin = null;
   }
   
   turnOnGateScene(){

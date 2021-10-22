@@ -66,7 +66,6 @@ function setup() {
   manager.setInit();
   manager.displayInitScreen();
   weather_setup();
-
 }
 
 function draw() {
@@ -75,9 +74,14 @@ function draw() {
     manager.setGradient(0, 0, manager.width, manager.height, color(65), color(50), Y_AXIS);
   } else if (needPenguinScene) {
     managerGame.drawPenguinScene();
+    managerGame.createSnowball(time, speedSnowball, scaleSnowball);
+    managerGame.movePenguinRight(1, RIGHT);
+    managerGame.movePenguinLeft(1, LEFT);
     managerGame.controlPenguin();
-    managerGame.movePenguinRight();
-    managerGame.movePenguinLeft();
+    managerGame.checkGameOver();
+    managerGame.removeSnowball(penguin.position.y);
+    managerGame.changeLevel();
+    managerGame.replay();
     drawSprites();
   } else if (needGateScene){
     managerGate.drawGateScene();
@@ -114,7 +118,7 @@ function draw() {
       /* Penguin setting on */
       manager.changeBtnPos(btnNext, btnNext.x + 20, 20);
       manager.turnOnPenguinScene();
-      managerGame.createPenguin();
+      managerGame.createPenguin(WIDTH_CANVAS/2, HEIGHT_CANVAS - 170, .5, .11);
 
       /* Question01-Main -> Question02 */
       btnNext.mousePressed(() => {
@@ -128,7 +132,6 @@ function draw() {
         /* Question02 -> Question02-Main */
         btnAnswer.mousePressed(() => {
           manager.hideQuestionScene(questionTwo, questionTwo_2, btnAnswer, btnWrongOne, btnWrongTwo);
-         
           song.play();
           manager.turnOffGradient();
           manager.turnOnGateScene();
