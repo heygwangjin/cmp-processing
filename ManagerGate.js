@@ -1,9 +1,17 @@
 class ManagerGate{
   drawGateScene(){
-    image(gate,0,0, WIDTH_CANVAS, HEIGHT_CANVAS);
     fill(255);
     textAlign(CENTER);
-    textSize(26);
-    text("This is Janganmun, the north gate of Suwon Hwaseong Fortress !", width / 2, 40);
+    textSize(50);
+    text("Press the ' f ' key!", width / 2, 40);
+  }
+  
+  gateFilter(){
+    if(key === 'f'){
+      img = gate;
+      for(let i = 0; i < 200; i++){
+        addLine();
+      }
+    }
   }
 }
