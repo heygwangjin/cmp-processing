@@ -3,6 +3,7 @@ const Y_AXIS = 1; // axis of gardient
 const X_AXIS = 2;
 const WIDTH_CANVAS = 1450;
 const HEIGHT_CANVAS = 800;
+const WRONG_SIZE = 150;
 
 const SNOW_COLOR = "snow";
 const SNOWFLAKES_PER_LAYER = 200;
@@ -36,7 +37,7 @@ let btnPlay, btnAnswer, btnWrongOne, btnWrongTwo, btnNext;
 /* Values for creating button */
 let textBtn, xPosBtn, yPosBtn, widthBtn, heightBtn;
 /* Font of fancy text */
-let font;
+let font, wrongFont, r = 0;
 /* Variables to store fancy text */
 let title, questionOne, questionOne_2, questionTwo, questionTwo_2, questionThree, questionThree_2;
 /* Variables to change background */
@@ -48,6 +49,8 @@ let song;
 /* filter image*/
 let img;
 
+let array;
+
 const manager = new Manager(WIDTH_CANVAS, HEIGHT_CANVAS);
 const managerGame = new ManagerGame();
 const managerGate = new ManagerGate();
@@ -57,6 +60,7 @@ function preload() {
   font = loadFont(
     "http://themes.googleusercontent.com/static/fonts/earlyaccess/nanumgothic/v3/NanumGothic-Regular.ttf"
   );
+  wrongFont = loadFont("data/Arial.ttf");
   antarctica = loadImage("data/antarctica.jpeg");
   gate = loadImage("data/Janganmun.png");
   
@@ -67,6 +71,7 @@ function preload() {
 function setup() {
   manager.setInit();
   manager.displayInitScreen();
+  manager.setWrong();
   weather_setup();
 }
 
@@ -108,16 +113,29 @@ function draw() {
     questionThree_2.drawFancyText();
   }
 
+  if(manager.wrong) manager.drawWrong();
+
   /* Initial Scene -> Question01 */
   btnPlay.mousePressed(() => {
     manager.drawQuestionScene(questionOne, questionOne_2, "Penguin", "Arctic bear", "Arctic fox");
     manager.deleteFancyText(title);
+    manager.changeBtnPos(btnAnswer, btnAnswer.x, btnAnswer.y + 100);
+    manager.changeBtnPos(btnWrongOne, btnWrongOne.x, btnWrongOne.y + 100);
+    manager.changeBtnPos(btnWrongTwo, btnWrongTwo.x, btnWrongTwo.y - 200);
+    btnWrongOne.mousePressed(() => {
+      manager.displayWrong(questionOne, questionOne_2);
+    });
+
+    btnWrongTwo.mousePressed(() => {
+      manager.displayWrong(questionOne, questionOne_2);
+    });
 
     /* Question01 -> Question01-Main */
     btnAnswer.mousePressed(() => {
       /* Previous setting off */
       manager.hideQuestionScene(questionOne, questionOne_2, btnAnswer, btnWrongOne, btnWrongTwo);
       manager.turnOffGradient();
+      manager.hideWrong();
       /* Penguin setting on */
       manager.changeBtnPos(btnNext, btnNext.x + 20, 20);
       manager.turnOnPenguinScene();
@@ -129,8 +147,16 @@ function draw() {
         manager.turnOffPenguinScene();
         /* Question02 setting on */
         manager.turnOnGradient();
-        manager.drawQuestionScene(questionTwo, questionTwo_2, "Paldalmun Gate", "Janganmun Gate", "Hwaseomun Gate");
+        manager.drawQuestionScene(questionTwo, questionTwo_2, "Janganmun Gate", "Paldalmun Gate", "Hwaseomun Gate");
         manager.hideMainScene(btnNext);
+
+        btnWrongOne.mousePressed(() => {
+          manager.displayWrong(questionTwo, questionTwo_2);
+        });
+
+        btnWrongTwo.mousePressed(() => {
+          manager.displayWrong(questionTwo, questionTwo_2);
+        });
 
         /* Question02 -> Question02-Main */
         btnAnswer.mousePressed(() => {
@@ -139,17 +165,29 @@ function draw() {
           song.play();
           manager.turnOffGradient();
           manager.turnOnGateScene();
+          manager.hideWrong();
           
           /* Question02-Main -> Question03*/
           btnNext.mousePressed(() => {
             song.pause();
             manager.turnOffGateScene();
             manager.turnOnGradient();
-            manager.drawQuestionScene(questionThree, questionThree_2, "Anna", "Elsa", "Olaf");
+            manager.drawQuestionScene(questionThree, questionThree_2, "Elsa", "Anna", "Olaf");
+            manager.changeBtnPos(btnAnswer, btnAnswer.x, btnAnswer.y - 100);
+            manager.changeBtnPos(btnWrongOne, btnWrongOne.x, btnWrongOne.y + 200);
+            manager.changeBtnPos(btnWrongTwo, btnWrongTwo.x, btnWrongTwo.y - 100);
             manager.hideMainScene(btnNext);
 
+            btnWrongOne.mousePressed(() => {
+              manager.displayWrong(questionThree, questionThree_2);
+            });
+
+            btnWrongTwo.mousePressed(() => {
+              manager.displayWrong(questionThree, questionThree_2);
+            });
             /* Question03 -> Question03-Main */
             btnAnswer.mousePressed(() => {
+              manager.hideWrong();
               manager.hideQuestionScene(questionThree, questionThree_2, btnAnswer, btnWrongOne, btnWrongTwo);
               manager.hideMainScene(btnNext);
               manager.turnOffGradient();
