@@ -1,3 +1,4 @@
+
 /* Constants */
 const Y_AXIS = 1; // axis of gardient
 const X_AXIS = 2;
@@ -5,33 +6,6 @@ const WIDTH_CANVAS = 1450;
 const HEIGHT_CANVAS = 800;
 const WRONG_SIZE = 150;
 
-const SNOW_COLOR = "snow";
-const SNOWFLAKES_PER_LAYER = 200;
-const MAX_SIZE = 10;
-//const GRAVITY = 0.5;
-const LAYER_COUNT = 4;
-
-const SKY_COLOR = "skyblue";
-const SKY_SPACE = 0.4;
-const SKY_AMP = 150;
-const SKY_ZOOM = 0.0025;
-const SKY_LAYER_OFFSET = 3;
-
-const WIND_SPEED = 1;
-const WIND_CHANGE = 0.0025;
-
-const SUN_COLOR = "#FFF2AD";
-const SUN_GLOW = 100;
-const SUN_RADIUS = 150;
-
-const RIDGE_TOP_COLOR = "#BCCEDD";
-const RIDGE_BOT_COLOR = "#7E9CB9";
-const RIDGE_STEP = 4;
-const RIDGE_AMP = 250;
-const RIDGE_ZOOM = 0.005;
-  let snow=0.3;
-
-const SNOWFLAKES = [];
 /* Buttons */
 let btnPlay, btnAnswer, btnWrongOne, btnWrongTwo, btnNext;
 /* Values for creating button */
@@ -46,6 +20,7 @@ let needGradient, needPenguinScene, needGateScene,needSnowScene;
 let antarctica, gate;
 /* sound */
 let song; 
+let song_frozen;
 /* filter image*/
 let img;
 
@@ -66,6 +41,7 @@ function preload() {
   
   soundFormats('mp3');
   song = loadSound("data/music.mp3");
+  song_frozen=loadSound("data/frozen.mp3");
 }
 
 function setup() {
@@ -192,6 +168,7 @@ function draw() {
               manager.hideMainScene(btnNext);
               manager.turnOffGradient();
               manager.turnOnSnowScene();
+             song_frozen.play();
             });
           });
         });
