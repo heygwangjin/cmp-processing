@@ -8,6 +8,7 @@ class Manager {
     this.width = w;
     this.height = h;
     this.startingTime = 0;
+    this.wrong = 0;
   }
 
   // * We can here implement everything that needs to be assigned at the start of the program.
@@ -207,6 +208,42 @@ class Manager {
   hideMainScene(btn){
     this.hideBtn(btn);
     redraw();
+  }
+
+  setWrong(){
+    array = wrongFont.textToPoints("WRONG!", width/3-70, height/2-100, WRONG_SIZE);
+  }
+
+  displayWrong(q1, q2){
+    this.wrong = 1;
+    this.hideFancyText(q1);
+    this.hideFancyText(q2);
+
+    // Display wrong text for 2 seconds.
+    setTimeout(() => {
+      this.wrong = 0;
+      this.displayFancyText(q1);
+      this.displayFancyText(q2);
+    }, 700);
+  }
+
+  hideWrong() {
+    this.wrong = 0;
+  }
+
+  // Reference : https://openprocessing.org/sketch/1250854
+  drawWrong(){
+    fill(RED);
+    for(let i=0; i<array.length; i++){
+      push();
+        translate(array[i].x, array[i].y);
+        scale(0.2);
+        rotate(r);
+        r+=0.001;
+        strokeWeight(0.45);
+        rect(0,0,40,40);
+      pop();
+    }
   }
 
   // Use p5.js example
