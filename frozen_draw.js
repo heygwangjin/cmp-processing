@@ -1,3 +1,4 @@
+
 function frozen_draw() {
  r_color=map(mouseX,0,255,0,5);
  g_color=map(mouseY,0,255,0,10);
