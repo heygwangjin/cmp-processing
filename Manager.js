@@ -63,6 +63,7 @@ class Manager {
     needGradient = 1;
     needPenguinScene = 0;
     needSnowScene=0;
+    needFinalScene=0;
   }
 
   displayInitScreen() {
@@ -202,6 +203,17 @@ class Manager {
 
   turnOnSnowScene(){
     needSnowScene = 1;
+  }
+    turnOffSnowScene(){
+    needSnowScene = 0;
+  }
+
+   turnOnFinalScene(){
+    needFinalScene = 1;
+  }
+  
+  turnOffFinalScene(){
+    needFinalScene = 0;
   }
 
   /* Hide btn and main scene */

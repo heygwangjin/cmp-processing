@@ -1,4 +1,3 @@
-
 /* Constants */
 const Y_AXIS = 1; // axis of gardient
 const X_AXIS = 2;
@@ -15,7 +14,7 @@ let font, wrongFont, r = 0;
 /* Variables to store fancy text */
 let title, questionOne, questionOne_2, questionTwo, questionTwo_2, questionThree, questionThree_2;
 /* Variables to change background */
-let needGradient, needPenguinScene, needGateScene,needSnowScene;
+let needGradient, needPenguinScene, needGateScene,needSnowScene,needFinalScene;
 /* background image */
 let antarctica, gate;
 /* sound */
@@ -49,6 +48,7 @@ function setup() {
   manager.displayInitScreen();
   manager.setWrong();
   weather_setup();
+  fetchWeather();
 }
 
 function draw() {
@@ -73,6 +73,11 @@ function draw() {
     noStroke();
     frozen_draw();
   }
+  else if(needFinalScene)
+ {
+   noStroke();
+   snowdraw();
+ }
 
 
   /* Draw Question Scene. */
@@ -163,12 +168,19 @@ function draw() {
             });
             /* Question03 -> Question03-Main */
             btnAnswer.mousePressed(() => {
-              manager.hideWrong();
-              manager.hideQuestionScene(questionThree, questionThree_2, btnAnswer, btnWrongOne, btnWrongTwo);
               manager.hideMainScene(btnNext);
+              manager.hideQuestionScene(questionThree, questionThree_2, btnAnswer, btnWrongOne, btnWrongTwo);
               manager.turnOffGradient();
               manager.turnOnSnowScene();
-             song_frozen.play();
+              song_frozen.play();
+              manager.hideWrong();
+               btnNext.mousePressed(() => {
+                 song_frozen.stop();
+                 manager.turnOffSnowScene();
+                 manager.hideMainScene(btnNext);
+                 manager.turnOnFinalScene();
+       
+               });
             });
           });
         });
