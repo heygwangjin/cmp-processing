@@ -1,8 +1,7 @@
-
 function frozen_draw() {
- r_color=map(mouseX,0,255,0,5);
- g_color=map(mouseY,0,255,0,10);
- b_color=map(mouseX,0,255,15,0);
+  r_color=map(mouseX,0,255,0,5);
+  g_color=map(mouseY,0,255,0,10);
+  b_color=map(mouseX,0,255,15,0);
   background(r_color,g_color,b_color);
   blendMode(SCREEN);
   
@@ -32,9 +31,9 @@ function frozen_draw() {
         continue;
       }
       
-      let mass = max(-2 + particle1.life * 0.75, 0);
+       let mass = max(-2 + particle1.life * 0.75, 0);
       
-      drawingContext.shadowColor = color(110 + particle1.life * 1.5, mouseX, mouseY, 255 - particle1.life * 5);
+       drawingContext.shadowColor = color(random(-10,100) + particle1.life * 1.5, mouseX, mouseY, 255 - particle1.life * 5);
       drawingContext.shadowBlur = mass;
       
       noFill();
