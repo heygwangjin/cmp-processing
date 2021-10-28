@@ -34,7 +34,7 @@ function frozen_draw() {
       
       let mass = max(-2 + particle1.life * 0.75, 0);
       
-      drawingContext.shadowColor = color(110 + particle1.life * 1.5, mouseX, mouseY, 255 - particle1.life * 5);
+      drawingContext.shadowColor = color(random(10,110) + particle1.life * 1.5, mouseX, mouseY, 255 - particle1.life * 5);
       drawingContext.shadowBlur = mass;
       
       noFill();
