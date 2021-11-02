@@ -48,6 +48,7 @@ function setup() {
   manager.displayInitScreen();
   manager.setWrong();
   weather_setup();
+  fetchWeather();
 }
 
 function draw() {
@@ -74,7 +75,8 @@ function draw() {
   }
   else if(needFinalScene){
     noStroke();
-    snowdraw();
+    weatherdraw();
+    displayWeather();
   }
 
   /* Draw Question Scene. */
@@ -126,6 +128,9 @@ function draw() {
         /* Question02 setting on */
         manager.turnOnGradient();
         manager.drawQuestionScene(questionTwo, questionTwo_2, "Janganmun Gate", "Paldalmun Gate", "Hwaseomun Gate");
+        manager.changeBtnPos(btnAnswer, btnAnswer.x, btnAnswer.y);
+        manager.changeBtnPos(btnWrongOne, btnWrongOne.x, btnWrongOne.y + 200);
+        manager.changeBtnPos(btnWrongTwo, btnWrongTwo.x, btnWrongTwo.y - 200);
         manager.hideMainScene(btnNext);
 
         btnWrongOne.mousePressed(() => {
