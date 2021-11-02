@@ -43,8 +43,12 @@ function weather_setup(){
       });
     }
   }
+  
+  for(let i=0; i<dropNum; i++){
+    drops.push(new Drop());
+  }
 }
-function snowdraw() {
+function weatherdraw() {
  background(SKY_COLOR);
   const skyHeight = round(height * SKY_SPACE);
 
@@ -79,10 +83,21 @@ function snowdraw() {
     );
 
     // Draw each snowflake
-    for (let i = 0; i < SNOWLAYER.length; i++) {
-      const snowflake = SNOWLAYER[i];
-      circle(snowflake.x, snowflake.y, (snowflake.l * MAX_SIZE) / LAYER_COUNT);
-      updateSnowflake(snowflake);
+    if(id < 700 && id >= 600){
+      for (let i = 0; i < SNOWLAYER.length; i++) {
+        const snowflake = SNOWLAYER[i];
+        circle(snowflake.x, snowflake.y, (snowflake.l * MAX_SIZE) / LAYER_COUNT);
+        updateSnowflake(snowflake);
+    
+      }
+    }
+    // Draw each drop
+    else if(id < 600){
+       for(let i = 0; i < drops.length; i++){
+         drops[i].move();
+         drops[i].relocate();
+         drops[i].show();
+       }
     }
   }
 }
